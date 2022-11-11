@@ -45,7 +45,6 @@ namespace Breakthrough
 
 		public void PlayGame()
 		{
-			string MenuChoice;
 			if (Locks.Count > 0)
 			{
 				GameOver = false;
@@ -61,15 +60,18 @@ namespace Breakthrough
 						Console.WriteLine(CurrentLock.GetLockDetails());
 						Console.WriteLine(Sequence.GetCardDisplay());
 						Console.WriteLine(Hand.GetCardDisplay());
-						MenuChoice = GetChoice();
+						Console.WriteLine();
+
+						Console.Write("Choose an option\nD) discard inspect\nU) use card\nS) save game\nQ) quit game\nR) remaining cards\n:> ");
+						char MenuChoice = char.ToUpper(Console.ReadKey().KeyChar);
+						Console.Write("\n");
+
 						switch (MenuChoice)
 						{
-							case "D":
-								{
-									Console.WriteLine(Discard.GetCardDisplay());
-									break;
-								}
-							case "U":
+							case 'D':
+								Console.WriteLine(Discard.GetCardDisplay());
+								break;
+							case 'U':
 								{
 									int CardChoice = GetCardChoice();
 									string DiscardOrPlay = GetDiscardOrPlayChoice();
@@ -82,7 +84,51 @@ namespace Breakthrough
 										PlayCardToSequence(CardChoice);
 									break;
 								}
+							case 'S':
+								Console.Write("You chose to save game\n");
+								break;
+							case 'Q':
+								Console.Write("You chose to quit the game\n");
+								break;
+							case 'R':
+								{
+									Console.Write("Which deck to check\nD) Deck stack\nH) Hand stack\nS) Sequence Stack\nX) Discard Stack\n:> ");
+									char remainChoice = char.ToUpper(Console.ReadKey().KeyChar);
+									Console.Write("\n");
+
+									switch (remainChoice)
+									{
+										case 'D':
+											Console.Write($"Deck has {Deck.GetNumberOfCards()}\n");
+											break;
+
+										case 'H':
+											Console.Write($"Hand has {Hand.GetNumberOfCards()}\n");
+											break;
+
+										case 'S':
+											Console.Write($"Sequence has {Sequence.GetNumberOfCards()}\n");
+											break;
+
+										case 'X':
+											Console.Write($"Discard has {Discard.GetNumberOfCards()}\n");
+											break;
+
+										default:
+											Console.Write("Input was unknown. please re-input\n");
+											break;
+									}
+
+									break;
+								}
+							default:
+								Console.Write("Input was unknown. please re-input\n");
+								break;
 						}
+
+						Console.Write("Press enter to continue");
+						Console.ReadLine();
+
 						if (CurrentLock.GetLockSolved())
 						{
 							LockSolved = true;
@@ -362,14 +408,6 @@ namespace Breakthrough
 			string Choice;
 			Console.Write("(D)iscard or (P)lay?:> ");
 			Choice = Console.ReadLine().ToUpper();
-			return Choice;
-		}
-
-		private string GetChoice()
-		{
-			Console.WriteLine();
-			Console.Write("(D)iscard inspect, (U)se card:> ");
-			string Choice = Console.ReadLine().ToUpper();
 			return Choice;
 		}
 
