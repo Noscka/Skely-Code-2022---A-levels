@@ -62,7 +62,7 @@ namespace Breakthrough
 						Console.WriteLine(Hand.GetCardDisplay());
 						Console.WriteLine();
 
-						Console.Write("Choose an option\nD) discard inspect\nU) use card\nS) save game\nQ) quit game\nR) remaining cards\n:> ");
+						Console.Write("Choose an option\nD) discard inspect\nU) use card\nS) save game\nQ) quit game\nR) remaining cards\nX) reset deck\n:> ");
 						char MenuChoice = char.ToUpper(Console.ReadKey().KeyChar);
 						Console.Write("\n");
 
@@ -122,6 +122,12 @@ namespace Breakthrough
 
 									break;
 								}
+
+							case 'X':
+								Console.Write("Resetting card deck");
+								Discard < Hand;
+								break;
+
 							default:
 								Console.Write("Input was unknown. please re-input\n");
 								break;
@@ -854,6 +860,16 @@ namespace Breakthrough
 				CardDisplay += LineOfDashes + Environment.NewLine;
 			}
 			return CardDisplay;
+		}
+
+		public static CardCollection operator <(CardCollection a, CardCollection b)
+		{
+			a.Cards.AddAppend(b.Cards);
+		}
+
+		public static CardCollection operator >(CardCollection a, CardCollection b)
+		{
+
 		}
 	}
 }
