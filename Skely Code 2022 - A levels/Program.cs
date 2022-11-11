@@ -89,6 +89,7 @@ namespace Breakthrough
 								break;
 							case 'Q':
 								Console.Write("You chose to quit the game\n");
+								Environment.Exit(0);
 								break;
 							case 'R':
 								{
