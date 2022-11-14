@@ -124,8 +124,8 @@ namespace Breakthrough
 								}
 
 							case 'X':
-								Console.Write("Resetting card deck");
-								Discard < Hand;
+								Console.Write("Resetting card deck\n");
+								Hand.MoveCards(ref Discard);
 								break;
 
 							default:
@@ -862,14 +862,10 @@ namespace Breakthrough
 			return CardDisplay;
 		}
 
-		public static CardCollection operator <(CardCollection a, CardCollection b)
+		public void MoveCards(ref CardCollection to)
 		{
-			a.Cards.AddAppend(b.Cards);
-		}
-
-		public static CardCollection operator >(CardCollection a, CardCollection b)
-		{
-
+			to.Cards.AddRange(this.Cards);
+			this.Cards.Clear();
 		}
 	}
 }
